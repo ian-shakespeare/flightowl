@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.fo-btn {
+    @apply border-2 border-fo-purple rounded-lg text-white font-semibold bg-fo-purple p-4 duration-200 ease-in-out hover:text-fo-purple hover:bg-white
+}
+
+.fo-btn-secondary {
+    @apply border-2 border-fo-purple rounded-lg text-fo-purple font-semibold bg-white p-4 duration-200 ease-in-out hover:text-white hover:bg-fo-purple
+}
+
+.fo-hyperlink {
+    @apply text-fo-purple font-semibold hover:underline
+}
