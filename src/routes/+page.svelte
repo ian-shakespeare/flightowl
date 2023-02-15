@@ -2,12 +2,17 @@
     import AirportInput from '$lib/components/AirportInput.svelte'
     import ColorPalette from '$lib/components/ColorPalette.svelte'
     import Login from '$lib/components/Login.svelte'
-    import { isLoggedIn } from '$lib/store'
+    import { auth } from '$lib/store'
+    import { getUsers } from '$lib/api'
+    import { browser } from '$app/environment'
 
-    let isLoggedInValue: boolean
+    if (browser) {
+        auth.useLocalStorage()
+    }
 
-    isLoggedIn.subscribe(value => {
-        isLoggedInValue = value
+    let isSignedIn: boolean
+    auth.subscribe(value => {
+        isSignedIn = value
     })
 </script>
 
@@ -15,11 +20,14 @@
 <!-- <h1 class='block bg-purple-500'>Welcome to FlightOwl</h1>
 <AirportInput placeholder='Where do you want to fly?' />
 <AirportInput placeholder='Where are you flying from?' /> -->
-{#if !isLoggedInValue}
+{#if !isSignedIn}
     <Login />
 {:else}
     <div>You are logged in</div>
-    <button on:click={() => isLoggedIn.set(false)} class='fo-btn'>
+    <button on:click={() => getUsers()}>
+        Get Users
+    </button>
+    <button on:click={() => auth.set(false)} class='fo-btn'>
         Logout
     </button>
 {/if}

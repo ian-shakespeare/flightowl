@@ -1,5 +1,5 @@
 <script lang='ts'>
-    import { login } from '$lib/auth'
+    import { login } from '$lib/api/auth'
 
     let email = ''
     let password = ''
