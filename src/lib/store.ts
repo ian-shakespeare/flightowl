@@ -1,21 +1,21 @@
 import { writable } from 'svelte/store'
 
-const createAuthStore = (key: string, startValue: boolean) => {
+const createBoolStore = (key: string, startValue: boolean) => {
     const { subscribe, set } = writable(startValue)
 
     return {
         subscribe,
         set,
         useLocalStorage: () => {
-            const storedIsSignedIn = localStorage.getItem('isSignedIn') === 'true'
-            if (storedIsSignedIn) {
-                set(storedIsSignedIn)
+            const storedValue = localStorage.getItem(key) === 'true'
+            if (storedValue) {
+                set(storedValue)
             }
             subscribe(value => {
-                localStorage.setItem('isSignedIn', value ? 'true' : '')
+                localStorage.setItem(key, value ? 'true' : '')
             })
         }
     }
 }
 
-export const auth = createAuthStore('auth', false)
+export const auth = createBoolStore('isSignedIn', false)

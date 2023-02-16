@@ -1,11 +1,12 @@
 <script lang='ts'>
     import { login } from '$lib/api/auth'
+    import { fade } from 'svelte/transition'
 
     let email = ''
     let password = ''
 </script>
 
-<form class='grid border-2 border-gray-100 w-[32rem] p-8 gap-4 shadow-lg rounded-lg'>
+<form transition:fade='{{ duration: 100 }}' class='grid border-2 border-gray-100 w-[32rem] p-8 gap-4 shadow-lg rounded-lg'>
     <h2 class='text-3xl justify-self-center'>
         Log In to Start Searching
     </h2>

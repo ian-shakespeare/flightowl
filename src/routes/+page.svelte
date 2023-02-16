@@ -5,6 +5,7 @@
     import { auth } from '$lib/store'
     import { getUsers } from '$lib/api'
     import { browser } from '$app/environment'
+    import { fade } from 'svelte/transition'
 
     if (browser) {
         auth.useLocalStorage()
@@ -17,17 +18,16 @@
 </script>
 
 <ColorPalette />
-<!-- <h1 class='block bg-purple-500'>Welcome to FlightOwl</h1>
-<AirportInput placeholder='Where do you want to fly?' />
-<AirportInput placeholder='Where are you flying from?' /> -->
 {#if !isSignedIn}
     <Login />
 {:else}
-    <div>You are logged in</div>
-    <button on:click={() => getUsers()}>
-        Get Users
-    </button>
-    <button on:click={() => auth.set(false)} class='fo-btn'>
-        Logout
-    </button>
+    <div transition:fade='{{ delay: 100 }}'>
+        You are logged in
+        <button on:click={() => getUsers()}>
+            Get Users
+        </button>
+        <button on:click={() => auth.set(false)} class='fo-btn'>
+            Logout
+        </button>
+    </div>
 {/if}
