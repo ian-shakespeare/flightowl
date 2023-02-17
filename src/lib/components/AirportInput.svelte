@@ -40,10 +40,10 @@
         bind:value={searchField.value}
         on:keypress={() => searchPossibleAirports()}
         placeholder={placeholder}
-        class='w-full border-2 border-gray-200 rounded-full py-2 px-4 outline-purple-300 ease-in-out duration-200'
+        class='text-center text-xl focus:outline-0'
     />
     {#if possibleAirports.length >= 1}
-        <div class='absolute z-10 inset-x-4 bg-white'>
+        <div class='absolute z-10 inset-x-0 bg-white'>
             {#each possibleAirports as airport}
                 <div
                     on:click={() => assignInput(airport)}

@@ -1,4 +1,5 @@
 <script lang='ts'>
+    import Box from '$lib/components/UI/Box.svelte'
     import { login } from '$lib/api/auth'
     import { fade } from 'svelte/transition'
 
@@ -6,7 +7,7 @@
     let password = ''
 </script>
 
-<form transition:fade='{{ duration: 100 }}' class='grid border-2 border-gray-100 w-[32rem] p-8 gap-4 shadow-lg rounded-lg'>
+<Box>
     <h2 class='text-3xl justify-self-center'>
         Log In to Start Searching
     </h2>
@@ -40,4 +41,4 @@
             Log In
         </button>
     </div>
-</form>
+</Box>

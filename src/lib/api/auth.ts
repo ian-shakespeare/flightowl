@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { PUBLIC_API_URL } from '$env/static/public'
 import { auth } from '$lib/store'
+import { redirect } from '@sveltejs/kit'
 
 export const login = async (email: string, password: string) => {
     const res = await axios.post(
@@ -24,7 +25,6 @@ export const login = async (email: string, password: string) => {
     switch (res.status) {
         case 201:
             auth.set(true)
-            alert('Logged In')
             break
         default:
             console.error(res.status)
