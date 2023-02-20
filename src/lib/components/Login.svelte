@@ -1,7 +1,6 @@
 <script lang='ts'>
     import Box from '$lib/components/UI/Box.svelte'
     import { login } from '$lib/api/auth'
-    import { fade } from 'svelte/transition'
 
     let email = ''
     let password = ''

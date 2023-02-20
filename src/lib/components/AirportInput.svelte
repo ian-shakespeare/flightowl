@@ -3,6 +3,7 @@
     import Fuse from 'fuse.js'
 
     export let placeholder: string
+    export let id: string
 
     type Airport = {
         item: {
@@ -35,12 +36,12 @@
     }
 </script>
 
-<div class='relative'>
+<div id={id} class='relative'>
     <input
         bind:value={searchField.value}
         on:keypress={() => searchPossibleAirports()}
         placeholder={placeholder}
-        class='text-center text-xl focus:outline-0'
+        class='text-center text-xl !outline-none duration-100 ease-in-out focus:border-b-2 focus:border-fo-magenta'
     />
     {#if possibleAirports.length >= 1}
         <div class='absolute z-10 inset-x-0 bg-white'>

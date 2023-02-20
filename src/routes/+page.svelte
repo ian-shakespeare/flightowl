@@ -5,4 +5,4 @@
 
 <h1>Welcome to FlightOwl</h1>
 <SearchBar />
-<ColorPalette />
+<!-- <ColorPalette /> -->
