@@ -13,3 +13,7 @@
 .fo-hyperlink {
     @apply text-fo-purple font-semibold hover:underline
 }
+
+.bg-fo-gradient {
+    @apply from-fo-pink to-fo-blue bg-gradient-to-b hover:to-fo-purple;
+}

@@ -1,24 +1,41 @@
 <script lang='ts'>
-    import { auth } from '$lib/store'
+    import Logo from '$lib/components/UI/Logo.svelte'
+    import { auth, type User } from '$lib/store'
     import { browser } from '$app/environment'
 
     if (browser) {
         auth.useLocalStorage()
     }
 
-    let isSignedIn: boolean
+    let activeSignIn: User
     auth.subscribe(value => {
-        isSignedIn = value
+        activeSignIn = value
     })
 </script>
 
-<nav class='w-full h-16 flex items-center justify-end px-12'>
-    {#if isSignedIn}
-        <button on:click={() => auth.set(false)} class='fo-hyperlink'>
-            Logout
+<nav class='w-full flex items-center justify-between px-12 py-4'>
+    <a href='/' class='flex items-center gap-2'>
+        <span class='inline-block relative w-16 h-16'>
+            <Logo />
+        </span>
+        <span class='text-3xl'>
+            FlightOwl
+        </span>
+    </a>
+    {#if activeSignIn.email}
+        <button on:click={() => {}} class='peer bg-fo-gradient text-white text-2xl uppercase w-12 h-12 rounded-full'>
+            {activeSignIn.email[0]}
         </button>
+        <div class='flex flex-col justify-between fixed w-1/5 inset-y-0 -right-full bg-white h-full shadow-2xl p-8 z-50 duration-300 ease-in-out hover:right-0 peer-focus:right-0'>
+            <h4 class='text-3xl text-center'>
+                {activeSignIn.email}
+            </h4>
+            <button class='fo-hyperlink'>
+                Log Out
+            </button>
+        </div>
     {:else}
-        <a href='/login' class='fo-btn'>
+        <a href='/login' class='fo-hyperlink'>
             Login
         </a>
     {/if}

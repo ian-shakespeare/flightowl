@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { PUBLIC_API_URL } from '$env/static/public'
-import { auth } from '$lib/store'
+import { auth, type User } from '$lib/store'
 
-let isSignedIn: boolean
+let activeSignIn: User
 auth.subscribe(value => {
-    isSignedIn = value
+    activeSignIn = value
 })
 
 export const getUsers = async () => {
@@ -26,7 +26,7 @@ export const getUsers = async () => {
             console.log('success!')
             break
         case 401:
-            auth.set(false)
+            auth.set({})
             alert('please log in again')
             break
         default:

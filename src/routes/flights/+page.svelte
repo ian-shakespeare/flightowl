@@ -80,13 +80,16 @@
         return name ?? 'Unregisted Airline'
     }
 
-    const toDuration = (d: string): string => d.slice(2).replace('H', ' hours, ').replace('M', ' minutes')
-    const militaryToAMPM = (t: string): string => {
-        const tArr = t.split(':')
-        tArr[0] = String(parseInt(tArr[0]) % 24)
-        return tArr.join(':')
+    const toDuration = (d: string): string => d.slice(2).replace('H', ' hr ').replace('M', ' min')
+    const toTime = (t: string): string => {
+        const d = new Date(t)
+        const options: Intl.DateTimeFormatOptions = {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        }
+        return d.toLocaleString('en-US', options)
     }
-    const toTime = (t: string): string => militaryToAMPM(t.split('T')[1])
 </script>
 
 <svelte:head>
@@ -94,9 +97,6 @@
 </svelte:head>
 
 <Box>
-    <h1>
-        Flights page
-    </h1>
     <ul>
         {#each flights as flight}
             <li class='grid items-center border-b-2 border-gray-100 py-8 last:border-0 lg:grid-flow-col lg:px-16'>
@@ -110,17 +110,15 @@
                     </span>
                 </h2>
                 <h3 class='text-2xl lg:text-center'>
-                    {toDuration(flight.itineraries[0].duration)}
+                    {toTime(flight.itineraries[0].segments[0].departure.at)} - {toTime(flight.itineraries[0].segments[flight.itineraries[0].segments.length - 1].arrival.at)}
+                    <br>
                     <span class='text-neutral-400'>
+                        {toDuration(flight.itineraries[0].duration)}
                         {#if flight.itineraries[0].segments.length == 1}
                             &lpar;{flight.itineraries[0].segments.length} stop&rpar;
                         {:else}
                             &lpar;{flight.itineraries[0].segments.length} stops&rpar;
                         {/if}
-                    </span>
-                    <br>
-                    <span class='text-neutral-400'>
-                        Departing at {toTime(flight.itineraries[0].segments[0].departure.at)}
                     </span>
                 </h3>
                 <h4 class='text-3xl lg:text-right'>

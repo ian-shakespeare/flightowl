@@ -3,6 +3,8 @@
     import SearchBar from '$lib/components/SearchBar.svelte'
 </script>
 
-<h1>Welcome to FlightOwl</h1>
+<h1 class='text-4xl text-center pt-64 pb-8'>
+    Where to, Chief
+</h1>
 <SearchBar />
 <!-- <ColorPalette /> -->

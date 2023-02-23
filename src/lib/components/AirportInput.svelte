@@ -3,7 +3,7 @@
     import Fuse from 'fuse.js'
 
     export let placeholder: string
-    export let id: string
+    export let code: string
 
     type Airport = {
         item: {
@@ -32,11 +32,12 @@
     const assignInput = (airport: Airport) => {
         searchField.value = airport.item.name
         searchField.code = airport.item.iata_code
+        code = airport.item.iata_code
         possibleAirports = []
     }
 </script>
 
-<div id={id} class='relative'>
+<div class='relative'>
     <input
         bind:value={searchField.value}
         on:keypress={() => searchPossibleAirports()}
