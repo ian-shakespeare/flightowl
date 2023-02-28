@@ -2,6 +2,7 @@
     import Logo from '$lib/components/UI/Logo.svelte'
     import { auth, type User } from '$lib/store'
     import { browser } from '$app/environment'
+    import { logout } from '$lib/api'
 
     if (browser) {
         auth.useLocalStorage()
@@ -27,10 +28,15 @@
             {activeSignIn.email[0]}
         </button>
         <div class='flex flex-col justify-between fixed w-1/5 inset-y-0 -right-full bg-white h-full shadow-2xl p-8 z-50 duration-300 ease-in-out hover:right-0 peer-focus:right-0'>
-            <h4 class='text-3xl text-center'>
-                {activeSignIn.email}
-            </h4>
-            <button class='fo-hyperlink'>
+            <section class='grid gap-4'>
+                <h4 class='text-3xl'>
+                    {activeSignIn.email}
+                </h4>
+                <a href='/account' class='text-2xl text-fo-magenta hover:underline'>
+                    Account
+                </a>
+            </section>
+            <button class='fo-hyperlink' on:click={() => logout()}>
                 Log Out
             </button>
         </div>
