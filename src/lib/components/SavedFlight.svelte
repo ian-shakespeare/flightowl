@@ -18,10 +18,6 @@
         flight = await getUpdatedFlight(savedFlight.offer_id) ?? flight
         loading = false
     }
-
-    const toDuration = (d: string): string => d.slice(2).replace('H', ' hr ').replace('M', ' min')
-
-    const toTime = (t: string): string => new Date(t).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true})
 </script>
 
 <svelte:head>
