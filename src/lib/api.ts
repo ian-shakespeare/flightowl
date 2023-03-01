@@ -1,13 +1,7 @@
 import axios from 'axios'
 import { PUBLIC_API_URL } from '$env/static/public'
-import { auth, type User } from '$lib/store'
-import { browser } from '$app/environment'
 import type { FlightOffer } from '$lib/interfaces'
-
-let activeSignIn: User
-auth.subscribe(value => {
-    activeSignIn = value
-})
+import { browser } from '$app/environment'
 
 export const getUsers = async () => {
     const res = await axios.get(
@@ -28,7 +22,6 @@ export const getUsers = async () => {
             console.log('success!')
             break
         case 401:
-            auth.set({})
             alert('please log in again')
             break
         default:
@@ -47,10 +40,6 @@ export const login = async (email: string, password: string) => {
         { withCredentials: true }
     )
     .then(res => {
-        const body: Record<string, string> = res.data
-        if (res.status == 200 && browser) {
-            document.cookie = `sessionId=${body['sessionId']}; Secure; SameSite=None`
-        }
         return res
     })
     .catch(err => {
@@ -61,20 +50,19 @@ export const login = async (email: string, password: string) => {
     if (res === null) return
 
     switch (res.status) {
-        case 200:
-            auth.set({ email: email })
+        case 201:
+            console.log('OK')
+            if (browser) {
+                location.reload()
+            }
             break
         case 401:
-            auth.set({})
+            console.log('Unauthorized')
             break
         default:
             console.error(res.status)
             break
     }
-}
-
-export const logout = () => {
-    auth.set({})
 }
 
 export const saveFlight = async (flightBody: FlightOffer) => {
@@ -92,5 +80,24 @@ export const saveFlight = async (flightBody: FlightOffer) => {
             break
         default:
             console.log(res)
+    }
+}
+
+export const getUpdatedFlight = async (offerId: number): Promise<FlightOffer | undefined> => {
+    const res = await axios.post(
+        PUBLIC_API_URL + '/flights/check',
+        { offerId: offerId },
+        { withCredentials: true }
+    )
+    .then(res => res)
+    .catch(err => console.error(err))
+
+    if (res === undefined) return
+
+    switch (res.status) {
+        case 200:
+            return res.data
+        default:
+            return
     }
 }

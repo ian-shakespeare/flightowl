@@ -4,6 +4,8 @@ import axios from 'axios'
 
 export const load = (async ({ cookies }) => {
     const sid = cookies.get('sessionId')
+    if (sid === undefined) return { account: null }
+
     const res = await axios.request({
         method: 'GET',
         url: PUBLIC_API_URL + '/flights/saved',

@@ -14,9 +14,13 @@
 </svelte:head>
 
 <Box>
-    <ul>
-        {#each flights as flight}
-            <SearchResult flight={flight} />
-        {/each}
-    </ul>
+    {#if data.account === null}
+        <div>You must be signed in to look up flights</div>
+    {:else}
+        <ul>
+            {#each flights as flight}
+                <SearchResult flight={flight} />
+            {/each}
+        </ul>
+    {/if}
 </Box>

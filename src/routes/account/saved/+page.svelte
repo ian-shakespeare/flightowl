@@ -1,10 +1,14 @@
 <script lang='ts'>
     import carriers from '$lib/data/carriers.json'
     import type { PageData } from './$types'
+    import type { SavedFlightOffer } from '$lib/interfaces'
     import Box from '$lib/components/UI/Box.svelte'
-    import Login from '$lib/components/Login.svelte'
+    import Icon from '$lib/components/UI/Icon.svelte'
+    import SavedFlight from '$lib/components/SavedFlight.svelte'
 
     export let data: PageData
+
+    const savedFlights: SavedFlightOffer[] = data.saved
 
     const getCarrierName = (code: string): string => {
         const name = (carriers as Record<string, string>)[code]
@@ -24,10 +28,10 @@
     }
 </script>
 
-{#if data.account === null}
-    <Login />
-{:else}
-    <Box>
-        Welcome back, {data.account.firstName}
-    </Box>
-{/if}
+<Box>
+    <ul>
+        {#each savedFlights as flight}
+            <SavedFlight savedFlight={flight} />
+        {/each}
+    </ul>
+</Box>

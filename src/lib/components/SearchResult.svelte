@@ -15,15 +15,7 @@
 
     const toDuration = (d: string): string => d.slice(2).replace('H', ' hr ').replace('M', ' min')
 
-    const toTime = (t: string): string => {
-        const d = new Date(t)
-        const options: Intl.DateTimeFormatOptions = {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true
-        }
-        return d.toLocaleString('en-US', options)
-    }
+    const toTime = (t: string): string => new Date(t).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true})
 
     const handleSaveFlight = () => {
         if (!isSaved) {

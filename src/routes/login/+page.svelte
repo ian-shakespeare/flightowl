@@ -1,20 +1,12 @@
 <script lang='ts'>
     import Login from '$lib/components/Login.svelte'
     import Box from '$lib/components/UI/Box.svelte'
-    import { auth, type User } from '$lib/store'
-    import { browser } from '$app/environment'
+    import type { LayoutData } from '../$types';
 
-    if (browser) {
-        auth.useLocalStorage()
-    }
-
-    let activeSignIn: User
-    auth.subscribe(value => {
-        activeSignIn = value
-    })
+    export let data: LayoutData
 </script>
 
-{#if !activeSignIn.email}
+{#if data.account === null}
     <Login />
 {:else}
     <Box>

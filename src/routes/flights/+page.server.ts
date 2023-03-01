@@ -4,6 +4,8 @@ import axios from 'axios'
 
 export const load = (async ({ cookies, url }) => {
     const sid = cookies.get('sessionId')
+    if (sid === undefined) return { account: null }
+
     const body = {
         'originLocationCode': url.searchParams.get('origin'),
         'destinationLocationCode': url.searchParams.get('destination'),
@@ -18,11 +20,20 @@ export const load = (async ({ cookies, url }) => {
         },
         data: body
     })
+    .then(res => res)
+    .catch(err => console.error(err))
 
-    if (res.status == 200) {
-        return {
-            flights: res.data
-        }
+    if (res === undefined) return { account: null }
+
+    switch (res.status) {
+        case 200:
+            return {
+                flights: res.data,
+            }
+        case 401:
+            return {
+                account: null
+            }
     }
 }) satisfies PageServerLoad
 

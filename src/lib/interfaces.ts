@@ -66,6 +66,17 @@ export interface FlightOffer {
 }
 
 export interface SavedFlightOffer {
+    offer_id: number
     date_saved: string
-    offer: FlightOffer
+    offer: {
+        data: FlightOffer
+    }
+}
+
+export interface Account {
+    firstName: string
+    lastName: string
+    email: string
+    sex: string
+    dateJoined: string
 }

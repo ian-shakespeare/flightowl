@@ -1,9 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-    class="absolute inset-0"
-    viewBox="0 0 1500 1500">
-    <path id="Unnamed copy"
-        class="fill-fo-purple stroke-black hover:fill-fo-magenta"
-        stroke-width="30"
+<svg class='w-0 h-0' aria-hidden='true' focusable='false'>
+    <linearGradient id='dark-gradient' x2='1' y2='1'>
+        <stop offset='0%' stop-color='#D651F5' />
+        <stop offset='100%' stop-color='#5455FF' />
+    </linearGradient>
+</svg>
+
+<svg class='w-0 h-0' aria-hidden='true' focusable='false'>
+    <linearGradient id='light-gradient' x2='1' y2='1'>
+        <stop offset='0%' stop-color='#D651F5' />
+        <stop offset='100%' stop-color='#7F58E8' />
+    </linearGradient>
+</svg>
+
+<svg class="absolute inset-0"
+    viewBox="0 0 1500 1500"
+    fill='url(#grad)'>
+    <path class="gradient stroke-white"
+        stroke-width="40"
         d="M 819.00,830.00
             C 819.00,815.00 833.00,597.00 1046.00,599.00
             1259.00,601.00 1279.00,791.00 1279.00,826.00
@@ -48,3 +61,12 @@
             414.00,943.00 342.00,907.00 342.00,844.00
             342.00,781.00 366.00,751.00 400.00,731.00 Z" />
 </svg>
+
+<style>
+    .gradient {
+        fill: url(#dark-gradient) #7F58E8;
+    }
+    .gradient:hover {
+        fill: url(#light-gradient) #7F58E8;
+    }
+</style>
