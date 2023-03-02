@@ -2,7 +2,6 @@
     import carriers from '$lib/data/carriers.json'
     import type { PageData } from './$types'
     import Box from '$lib/components/UI/Box.svelte'
-    import Login from '$lib/components/Login.svelte'
 
     export let data: PageData
 </script>
@@ -14,7 +13,12 @@
 </svelte:head>
 
 {#if data.account === null}
-    <Login />
+    <div class='text-lg text-center lg:text-xl'>
+        You aren't signed in.
+        <a href='/login' class='fo-hyperlink'>
+            Sign in here
+        </a>
+    </div>
 {:else}
     <Box styling='lg:gap-12'>
         <h1 class='text-3xl text-center lg:text-5xl'>
