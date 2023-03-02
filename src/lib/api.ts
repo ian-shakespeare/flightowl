@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { PUBLIC_API_URL } from '$env/static/public'
+import { PUBLIC_API_URL, PUBLIC_ACCOUNT_CREATION_DISABLED } from '$env/static/public'
 import type { FlightOffer } from '$lib/interfaces'
 import { browser } from '$app/environment'
 
@@ -31,6 +31,11 @@ export const getUsers = async () => {
 }
 
 export const login = async (email: string, password: string) => {
+    if (!email || !password) {
+        alert('Please fill in all fields')
+        return
+    }
+
     const res = await axios.post(
         PUBLIC_API_URL + '/sessions',
         {
@@ -58,6 +63,52 @@ export const login = async (email: string, password: string) => {
             break
         case 401:
             console.log('Unauthorized')
+            alert('Incorrect username or password')
+            break
+        default:
+            console.error(res.status)
+            break
+    }
+}
+
+export const register = async (firstName: string, lastName: string, email: string, password: string, sex: string) => {
+    if (PUBLIC_ACCOUNT_CREATION_DISABLED === 'true') {
+        alert('Sorry, but account creation is disabled')
+        return 
+    }
+
+    if (!firstName || !lastName || !email || !password) {
+        alert('Please fill in all fields')
+        return
+    }
+
+    const res = await axios.post(
+        PUBLIC_API_URL + '/users',
+        {
+            'firstName': firstName,
+            'lastName': lastName,
+            'email': email,
+            'password': password,
+            'sex': sex
+        },
+        { withCredentials: true }
+    )
+    .then(res => {
+        return res
+    })
+    .catch(err => {
+        console.error(err)
+        return null
+    })
+
+    if (res === null) return
+
+    switch (res.status) {
+        case 201:
+            console.log('OK')
+            if (browser) {
+                location.reload()
+            }
             break
         default:
             console.error(res.status)

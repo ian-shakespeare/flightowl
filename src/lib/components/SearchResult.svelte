@@ -25,7 +25,7 @@
     }
 </script>
 
-<li class='grid items-center border-b-2 border-gray-100 py-8 last:border-0 lg:grid-flow-col lg:px-16'>
+<li class='grid gap-6 items-center border-b-2 border-gray-100 py-8 last:border-0 lg:grid-flow-col lg:gap-0 lg:px-16'>
     <div class='text-5xl'>
         {flight.itineraries[0].segments[0].departure.iataCode}
         <Icon name='fa-solid fa-arrow-right' />
@@ -35,7 +35,7 @@
             {getCarrierName(flight.validatingAirlineCodes[0])}
         </span>
     </div>
-    <div class='text-2xl lg:text-center'>
+    <div class='text-2xl text-center'>
         {toTime(flight.itineraries[0].segments[0].departure.at)} - {toTime(flight.itineraries[0].segments[flight.itineraries[0].segments.length - 1].arrival.at)}
         <br>
         <span class='text-neutral-400'>
@@ -47,14 +47,13 @@
             {/if}
         </span>
     </div>
-    <div class='text-3xl lg:text-right'>
+    <div class='flex justify-between items-center text-3xl lg:justify-end'>
         ${flight.price.total}
-        <br>
-        <button class='fo-hyperlink text-2xl' on:click={handleSaveFlight}>
+        <button title='Save this flight' class='fo-hyperlink text-2xl' disabled={isSaved} on:click={handleSaveFlight}>
             {#if isSaved}
-                Saved
+                <Icon name='fa-solid fa-star fa-lg' />
             {:else}
-                Save
+                <Icon name='fa-regular fa-star fa-lg' />
             {/if}
         </button>
     </div>

@@ -1,8 +1,15 @@
 <script lang='ts'>
     import Logo from '$lib/components/UI/Logo.svelte'
     import type { Account } from '$lib/interfaces'
+    import { browser } from '$app/environment'
 
     export let account: Account | null
+
+    const logout = () => {
+        if (!browser) return
+
+        alert('Not Implemented!')
+    }
 </script>
 
 <nav class='w-full flex items-center justify-between px-8 py-4 lg:px-12'>
@@ -34,7 +41,7 @@
                 Account
             </a>
             <hr class='my-4'>
-            <button class='text-2xl text-left self-end hover:underline' on:click={() => alert('Not Implemented')}>
+            <button class='text-2xl text-left self-end hover:underline' on:click={logout}>
                 Log Out
             </button>
         </div>

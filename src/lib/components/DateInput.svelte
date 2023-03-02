@@ -5,5 +5,5 @@
 <input
     bind:value={date}
     placeholder='Date (mm/dd/yyyy)'
-    class='text-center text-xl !outline-none duration-100 ease-in-out focus:border-b-2 focus:border-fo-magenta'
+    class='w-64 text-xl !outline-none duration-100 ease-in-out focus:border-b-2 focus:border-fo-magenta lg:text-center'
 />

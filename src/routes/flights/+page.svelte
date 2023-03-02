@@ -15,7 +15,12 @@
 
 <Box>
     {#if data.account === null}
-        <div>You must be signed in to look up flights</div>
+        <div class='text-lg text-center lg:text-xl'>
+            You must be signed in to look up flights.
+            <a href='/login' class='fo-hyperlink'>
+                Sign in here
+            </a>
+        </div>
     {:else}
         <ul>
             {#each flights as flight}

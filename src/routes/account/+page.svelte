@@ -5,29 +5,43 @@
     import Login from '$lib/components/Login.svelte'
 
     export let data: PageData
-
-    const getCarrierName = (code: string): string => {
-        const name = (carriers as Record<string, string>)[code]
-        return name ?? 'Unregisted Airline'
-    }
-
-    const toDuration = (d: string): string => d.slice(2).replace('H', ' hr ').replace('M', ' min')
-
-    const toTime = (t: string): string => {
-        const d = new Date(t)
-        const options: Intl.DateTimeFormatOptions = {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true
-        }
-        return d.toLocaleString('en-US', options)
-    }
 </script>
+
+<svelte:head>
+    <title>
+        Your Account - FlightOwl
+    </title>
+</svelte:head>
 
 {#if data.account === null}
     <Login />
 {:else}
-    <Box>
-        Welcome back, {data.account.firstName}
+    <Box styling='lg:gap-12'>
+        <h1 class='text-3xl text-center lg:text-5xl'>
+            Welcome back, {data.account.firstName}
+        </h1>
+        <table class='w-full text-lg text-gray-400 lg:w-80 lg:mx-auto lg:text-2xl'>
+            <tbody class='grid gap-4 lg:gap-6'>
+                <tr class='grid grid-flow-col lg:grid-cols-2'>
+                    <td class='whitespace-nowrap'>
+                        Email:
+                    </td>
+                    <td class='text-right text-fo-magenta whitespace-nowrap lg:text-left'>
+                        {data.account.email}
+                    </td>
+                </tr>
+                <tr class='grid grid-flow-col lg:grid-cols-2'>
+                    <td class='whitespace-nowrap'>
+                        Joined:
+                    </td>
+                    <td class='text-right text-fo-purple whitespace-nowrap lg:text-left'>
+                        {new Date(data.account.dateJoined).toDateString().replace(' ', ', ')}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href='/account/saved' class='fo-btn lg:w-80 lg:mx-auto'>
+            View Saved Flights
+        </a>
     </Box>
 {/if}

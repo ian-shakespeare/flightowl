@@ -9,6 +9,9 @@ module.exports = {
         'fo-purple': '#7F58E8',
         'fo-blue': '#5455FF',
         'fo-aqua': '#517DF5',
+      },
+      fontFamily: {
+        'golos': ['Golos Text', 'sans-serif']
       }
     },
   },
