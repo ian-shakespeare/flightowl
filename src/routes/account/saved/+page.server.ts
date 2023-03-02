@@ -14,8 +14,6 @@ export const load = (async ({ cookies }) => {
         }
     })
 
-    console.log(res.data)
-
     if (res.status == 200) {
         return {
             saved: res.data
