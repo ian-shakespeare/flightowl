@@ -1,5 +1,4 @@
 <script lang='ts'>
-    import carriers from '$lib/data/carriers.json'
     import type { PageData } from './$types'
     import Box from '$lib/components/UI/Box.svelte'
 

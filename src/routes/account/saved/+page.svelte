@@ -8,6 +8,12 @@
     const savedFlights: SavedFlightOffer[] = data.saved.sort((a: SavedFlightOffer, b: SavedFlightOffer) => new Date(b.date_saved).getTime() - new Date(a.date_saved).getTime())
 </script>
 
+<svelte:head>
+    <title>
+        Saved Flights - FlightOwl
+    </title>
+</svelte:head>
+
 <Box>
     {#if savedFlights.length < 1}
         <div class='text-lg text-center lg:text-xl'>
