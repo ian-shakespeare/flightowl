@@ -27,7 +27,7 @@
                 Begin Searching
             </a>
         </div>
-    {:else if PUBLIC_ACCOUNT_CREATION_DISABLED}
+    {:else if PUBLIC_ACCOUNT_CREATION_DISABLED === 'true'}
         <div class='text-lg text-center lg:text-xl'>
             Sorry, but account creation is disabled. If you have an account, 
             <a href='/login' class='fo-hyperlink'>
