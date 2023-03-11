@@ -9,6 +9,7 @@
     <title>
         Your Account - FlightOwl
     </title>
+    <meta name='description' content='View your FlightOwl account information'>
 </svelte:head>
 
 {#if data.account === null}

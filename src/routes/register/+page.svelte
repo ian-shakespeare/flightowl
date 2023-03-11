@@ -10,6 +10,7 @@
     let lastName = ''
     let email = ''
     let password = ''
+    let passwordConfirm = ''
     let sex = 'unselected'
 </script>
 
@@ -17,6 +18,7 @@
     <title>
         Register - FlightOwl
     </title>
+    <meta name='description' content='Make an account to gain full access to FlightOwl'>
 </svelte:head>
 
 <Box>
@@ -84,7 +86,19 @@
                 bind:value={password}
                 type='password'
                 name='password'
-                placeholder="What's your password?"
+                placeholder="Enter a password"
+                class='border-2 border-gray-100 p-4 rounded-lg ring-fo-magenta'
+            />
+        </label>
+        <label for='password-confirm' class='grid gap-2'>
+            <span class='after:content-["*"] after:text-fo-pink after:ml-0.5'>
+                Confirm Password
+            </span>
+            <input
+                bind:value={passwordConfirm}
+                type='password'
+                name='password-confirm'
+                placeholder="Enter your password again"
                 class='border-2 border-gray-100 p-4 rounded-lg ring-fo-magenta'
             />
         </label>
@@ -92,7 +106,7 @@
             <a href='/register' class='fo-hyperlink'>
                 Log In to Existing Account
             </a>
-            <button on:click={() => register(firstName, lastName, email, password, sex)} class='fo-btn'>
+            <button on:click={() => register(firstName, lastName, email, password, passwordConfirm, sex)} class='fo-btn'>
                 Create
             </button>
         </div>

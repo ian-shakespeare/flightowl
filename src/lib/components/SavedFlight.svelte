@@ -20,13 +20,14 @@
         loading = true
 
         const updatedFlight = await getUpdatedFlight(savedFlight.offer_id)
-        if (updatedFlight === undefined) {
+        if (!updatedFlight) {
             status = 'UNAVAILABLE'
+            loading = false
             return
         }
 
-        loading = false
         status = 'CURRENT'
+        loading = false
     }
 </script>
 

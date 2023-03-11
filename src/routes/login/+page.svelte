@@ -13,14 +13,17 @@
     <title>
         Log In - FlightOwl
     </title>
+    <meta name='description' content='Log in to access everything FlightOwl has to offer'>
 </svelte:head>
 
 {#if data.account !== null}
     <Box>
-        You are logged in
-        <a href='/' class='fo-hyperlink'>
-            Begin Searching
-        </a>
+        <div class='text-lg text-center lg:text-xl'>
+            You are logged in.
+            <a href='/' class='fo-hyperlink'>
+                Begin Searching
+            </a>
+        </div>
     </Box>
 {:else}
     <Box>

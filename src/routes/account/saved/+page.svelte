@@ -12,6 +12,7 @@
     <title>
         Saved Flights - FlightOwl
     </title>
+    <meta name='description' content='All of your saved flights on FlightOwl'>
 </svelte:head>
 
 <Box>

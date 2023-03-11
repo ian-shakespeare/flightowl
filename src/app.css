@@ -1,21 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .fo-btn {
-    @apply border-2 border-fo-purple rounded-lg text-white text-center font-semibold bg-fo-purple p-4 duration-200 ease-in-out cursor-pointer hover:text-fo-purple hover:bg-white
+  @apply border-2 border-fo-purple rounded-lg text-white text-center font-semibold bg-fo-purple p-4 duration-200 ease-in-out cursor-pointer hover:text-fo-purple hover:bg-white;
 }
 
 .fo-btn-secondary {
-    @apply border-2 border-fo-purple rounded-lg text-fo-purple font-semibold bg-white p-4 duration-200 ease-in-out cursor-pointer hover:text-white hover:bg-fo-purple
+  @apply border-2 border-fo-purple rounded-lg text-fo-purple font-semibold bg-white p-4 duration-200 ease-in-out cursor-pointer hover:text-white hover:bg-fo-purple;
 }
 
 .fo-hyperlink {
-    @apply text-fo-purple font-semibold hover:underline
+  @apply text-fo-purple font-semibold hover:underline;
 }
 
 .bg-fo-gradient {
-    @apply from-fo-pink to-fo-blue bg-gradient-to-b hover:to-fo-purple;
+  @apply from-fo-pink to-fo-blue bg-gradient-to-b hover:to-fo-purple;
 }

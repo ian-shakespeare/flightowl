@@ -1,5 +1,6 @@
 <script lang='ts'>
     import Logo from '$lib/components/UI/Logo.svelte'
+    import Icon from '$lib/components/UI/Icon.svelte';
     import type { Account } from '$lib/interfaces'
     import { browser } from '$app/environment'
 
@@ -13,7 +14,7 @@
 </script>
 
 <nav class='w-full flex items-center justify-between px-8 py-4 lg:px-12'>
-    <a href='/' class='flex items-center gap-2'>
+    <a href='/' class='px-2 flex items-center gap-2 rounded-full duration-200 ease-in-out hover:shadow-lg'>
         <span class='inline-block relative w-16 h-16'>
             <Logo />
         </span>
@@ -22,8 +23,8 @@
         </span>
     </a>
     {#if account === null}
-        <a href='/login' class='fo-hyperlink'>
-            Login
+        <a title='Log In' href='/login' class='rounded-full duration-200 ease-in-out hover:shadow-lg'>
+            <Icon name="fa-solid fa-right-to-bracket fa-2x" />
         </a>
     {:else}
         <button on:click={() => {}} class='peer bg-fo-gradient text-white text-2xl uppercase w-12 h-12 rounded-full'>
