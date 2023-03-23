@@ -14,7 +14,7 @@ export const load = (async ({ cookies, url }) => {
   };
   const res = await axios
     .request({
-      method: "GET",
+      method: "POST",
       url: PUBLIC_API_URL + "/flights",
       headers: {
         Cookie: `sessionId=${sid};`,
