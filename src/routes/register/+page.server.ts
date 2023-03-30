@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { Actions } from "./$types";
-import { fail, redirect } from "@sveltejs/kit";
+import { fail } from "@sveltejs/kit";
 import {
     PUBLIC_API_URL,
     PUBLIC_ACCOUNT_CREATION_DISABLED,
@@ -11,23 +11,39 @@ type Response = {
 };
 
 export const actions = {
-    login: async ({ cookies, request }) => {
+    default: async ({ cookies, request }) => {
+        if (PUBLIC_ACCOUNT_CREATION_DISABLED === "true") {
+            fail(401);
+            return;
+        }
         const data = await request.formData();
+        const fname = data.get("fname");
+        const lname = data.get("lname");
         const email = data.get("email");
         const password = data.get("password");
+        const confirmPassword = data.get("password-confirm");
 
-        if (!email) fail(400, { email, incorrect: true });
-        if (!password) fail(400, { password, incorrect: true });
+        if (!email) {
+            fail(400, { email, incorrect: true });
+            return;
+        }
+        if (!password || !confirmPassword || password !== confirmPassword) {
+            fail(400, { password, incorrect: true });
+            return;
+        }
 
         let status = 0;
         let response: Response = { token: "" };
 
         await axios
             .post(
-                PUBLIC_API_URL + "/login",
+                PUBLIC_API_URL + "/register",
                 {
+                    firstName: fname,
+                    lastName: lname,
                     email: email,
                     password: password,
+                    sex: "unselected",
                 },
                 { withCredentials: true }
             )
@@ -49,9 +65,5 @@ export const actions = {
             secure: true,
         });
         return { success: true, token: response.token };
-    },
-    logout: async ({ cookies }) => {
-        cookies.delete("jwt");
-        throw redirect(301, "/");
     },
 } satisfies Actions;

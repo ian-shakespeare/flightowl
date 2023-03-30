@@ -4,10 +4,10 @@ import axios from "axios";
 
 export const load = (async ({ cookies }) => {
     const token = cookies.get("jwt");
-    if (token === undefined) return { account: null };
-
-    let status = 0;
+    let status = 401;
     let account = null;
+
+    if (!token) return { account, status };
 
     await axios
         .request({

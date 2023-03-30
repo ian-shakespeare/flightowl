@@ -1,5 +1,6 @@
 <script lang='ts'>
     import { browser } from '$app/environment';
+    import ErrorNotification from '$lib/components/ErrorNotification.svelte';
     import Box from '$lib/components/UI/Box.svelte'
     import type { LayoutData } from '../$types';
     import type { ActionData } from './$types';
@@ -20,20 +21,13 @@
 </svelte:head>
 
 {#if data.account !== null || form?.success}
-    <Box styling="max-w-md mx-auto">
-        <div class='text-lg text-center lg:text-xl'>
-            You are logged in.
-            <a href='/' class='fo-hyperlink'>
-                Begin Searching
-            </a>
-        </div>
-    </Box>
+    <ErrorNotification errorType="alreadyAuthed" />
 {:else}
     <Box styling="max-w-md mx-auto">
         <h2 class='text-3xl justify-self-center'>
             Log In to Start Searching
         </h2>
-        <form method="POST">
+        <form method="POST" action="?/login" class="grid gap-4">
             <label for='email' class='grid gap-2'>
                 <span class='after:content-["*"] after:text-fo-pink after:ml-0.5'>
                     Email

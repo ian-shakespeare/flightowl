@@ -1,0 +1,44 @@
+{
+    "noFlights": {
+        "message": "We couldn't find any flights that matched your search.",
+        "redirectUrl": "/",
+        "redirectText": "Try another search",
+        "severity": 1
+    },
+    "noSavedFlights": {
+        "message": "You don't have any saved flights.",
+        "redirectUrl": "/",
+        "redirectText": "Search here.",
+        "severity": 0
+    },
+    "unauthorized": {
+        "message": "You must be signed in to do that.",
+        "redirectUrl": "/login",
+        "redirectText": "Sign in here",
+        "severity": 2
+    },
+    "expired": {
+        "message": "It's been a while since we've seen you.",
+        "redirectUrl": "/login",
+        "redirectText": "Sign in again",
+        "severity": 2
+    },
+    "serverError": {
+        "message": "We ran into a problem processing your request.",
+        "redirectUrl": "/",
+        "redirectText": "Try again",
+        "severity": 3
+    },
+    "alreadyAuthed": {
+        "message": "You are signed in.",
+        "redirectUrl": "/",
+        "redirectText": "Start searching",
+        "severity": 0
+    },
+    "userAlreadyExists": {
+        "message": "That email is already being used. If you have an account,",
+        "redirectUrl": "/login",
+        "redirectText": "Sign in here",
+        "severity": 3
+    }
+}

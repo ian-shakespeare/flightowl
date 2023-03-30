@@ -37,7 +37,7 @@
     }
 </script>
 
-<div class='relative'>
+<div class='relative inline-block'>
     <input
         bind:value={searchField.value}
         on:keypress={() => searchPossibleAirports()}

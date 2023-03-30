@@ -1,10 +1,14 @@
 import type { PageServerLoad } from "./$types";
 import { PUBLIC_API_URL } from "$env/static/public";
 import axios from "axios";
+import type { FlightOffer } from "$lib/interfaces";
 
 export const load = (async ({ cookies, url }) => {
     const token = cookies.get("jwt");
-    if (token === undefined) return { account: null };
+    let flights: FlightOffer[] = [];
+    let status = 401;
+
+    if (!token) return { account: null, flights, status };
 
     const body = {
         originLocationCode: url.searchParams.get("origin"),
@@ -12,7 +16,7 @@ export const load = (async ({ cookies, url }) => {
         departureDate: url.searchParams.get("date"),
         adults: 1,
     };
-    const res = await axios
+    await axios
         .request({
             method: "POST",
             url: PUBLIC_API_URL + "/flights",
@@ -21,25 +25,17 @@ export const load = (async ({ cookies, url }) => {
             },
             data: body,
         })
-        .then((res) => res)
-        .catch((err) => console.error(err));
+        .then((res) => {
+            flights = res.data;
+            status = res.status;
+        })
+        .catch((err) => {
+            console.error(err);
+            status = err.response.status;
+        });
 
-    if (res === undefined) return { account: null };
-
-    switch (res.status) {
-        case 200:
-            return {
-                flights: res.data,
-            };
-        case 401:
-            return {
-                account: null,
-            };
-        default:
-            return {
-                flights: [],
-            };
-    }
+    status = status === 401 ? 4010 : status;
+    return { flights, status };
 }) satisfies PageServerLoad;
 
 export const ssr = true;

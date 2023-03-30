@@ -1,8 +1,13 @@
 <script lang='ts'>
     import SearchBar from '$lib/components/SearchBar.svelte'
+    import NewInput from '$lib/components/NewInput.svelte';
     import type { LayoutData } from './$types'
+    import type { Airport } from '$lib/interfaces';
 
     export let data: LayoutData
+
+    let airport1: Airport | null = null
+    let airport2: Airport | null = null
 </script>
 
 <svelte:head>
@@ -21,4 +26,14 @@
         {/if}
     </h1>
     <SearchBar />
+    <div class="flex">
+        <NewInput bind:selectedAirport={airport1} />
+        <NewInput bind:selectedAirport={airport2} />
+    </div>
+    <button on:click={() => {
+        console.log(airport1); console.log(airport2)
+    }}
+    >
+        Log airports
+    </button>
 </div>
