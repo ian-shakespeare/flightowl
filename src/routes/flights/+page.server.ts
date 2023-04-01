@@ -1,45 +1,41 @@
 import type { PageServerLoad } from "./$types";
-import { PUBLIC_API_URL } from "$env/static/public";
+import { API_URL } from "$env/static/private";
 import axios from "axios";
+import type { FlightOffer } from "$lib/interfaces";
 
 export const load = (async ({ cookies, url }) => {
-  const sid = cookies.get("sessionId");
-  if (sid === undefined) return { account: null };
+    const token = cookies.get("jwt");
+    let flights: FlightOffer[] = [];
+    let status = 401;
 
-  const body = {
-    originLocationCode: url.searchParams.get("origin"),
-    destinationLocationCode: url.searchParams.get("destination"),
-    departureDate: url.searchParams.get("date"),
-    adults: 1,
-  };
-  const res = await axios
-    .request({
-      method: "POST",
-      url: PUBLIC_API_URL + "/flights",
-      headers: {
-        Cookie: `sessionId=${sid};`,
-      },
-      data: body,
-    })
-    .then((res) => res)
-    .catch((err) => console.error(err));
+    if (!token) return { account: null, flights, status };
 
-  if (res === undefined) return { account: null };
+    const body = {
+        originLocationCode: url.searchParams.get("origin"),
+        destinationLocationCode: url.searchParams.get("destination"),
+        departureDate: url.searchParams.get("date"),
+        adults: 1,
+    };
+    await axios
+        .request({
+            method: "POST",
+            url: API_URL + "/flights",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: body,
+        })
+        .then((res) => {
+            flights = res.data;
+            status = res.status;
+        })
+        .catch((err) => {
+            console.error(err);
+            status = err.response.status;
+        });
 
-  switch (res.status) {
-    case 200:
-      return {
-        flights: res.data,
-      };
-    case 401:
-      return {
-        account: null,
-      };
-    default:
-      return {
-        flights: [],
-      };
-  }
+    status = status === 401 ? 4010 : status;
+    return { flights, status };
 }) satisfies PageServerLoad;
 
 export const ssr = true;

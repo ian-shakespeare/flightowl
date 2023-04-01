@@ -1,29 +1,33 @@
-import { PUBLIC_API_URL } from '$env/static/public'
-import type { LayoutServerLoad } from './$types'
-import axios from 'axios'
+import { API_URL } from "$env/static/private";
+import type { LayoutServerLoad } from "./$types";
+import axios from "axios";
 
 export const load = (async ({ cookies }) => {
-    const sid = cookies.get('sessionId')
-    if (sid === undefined) return { account: null }
+    const token = cookies.get("jwt");
+    let status = 401;
+    let account = null;
 
-    const res = await axios.request({
-        method: 'GET',
-        url: PUBLIC_API_URL + '/user',
-        headers: {
-            Cookie: `sessionId=${sid}`
-        }
-    })
-    .then(res => res)
-    .catch(err => console.error(err))
+    if (!token) return { account, status };
 
-    if (res === undefined) return { account: null }
+    await axios
+        .request({
+            method: "GET",
+            url: API_URL + "/user",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) => {
+            status = res.status;
+            account = res.data;
+        })
+        .catch((err) => {
+            status = err.status;
+            console.error(err);
+        });
 
-    switch (res.status) {
-        case 200:
-            return { account: res.data }
-        default:
-            return { account: null }
-    }
-}) satisfies LayoutServerLoad
+    if (status === 401) cookies.delete("jwt");
+    return { account, globalSigninStatus: status };
+}) satisfies LayoutServerLoad;
 
-export const ssr = true
+export const ssr = true;

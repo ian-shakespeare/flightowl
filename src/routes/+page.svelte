@@ -1,8 +1,13 @@
 <script lang='ts'>
     import SearchBar from '$lib/components/SearchBar.svelte'
+    import NewInput from '$lib/components/AirportInput.svelte';
     import type { LayoutData } from './$types'
+    import type { Airport } from '$lib/interfaces';
 
     export let data: LayoutData
+
+    let airport1: Airport | null = null
+    let airport2: Airport | null = null
 </script>
 
 <svelte:head>

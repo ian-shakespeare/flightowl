@@ -1,22 +1,32 @@
-import type { PageServerLoad } from './$types'
-import { PUBLIC_API_URL } from '$env/static/public'
-import axios from 'axios'
+import type { PageServerLoad } from "./$types";
+import { API_URL } from "$env/static/private";
+import axios from "axios";
+import type { SavedFlightOffer } from "$lib/interfaces";
 
 export const load = (async ({ cookies }) => {
-    const sid = cookies.get('sessionId')
-    if (sid === undefined) return { account: null }
+    const token = cookies.get("jwt");
+    let saved: SavedFlightOffer[] = [];
+    let status = 401;
 
-    const res = await axios.request({
-        method: 'GET',
-        url: PUBLIC_API_URL + '/flights/saved',
-        headers: {
-            Cookie: `sessionId=${sid}`
-        }
-    })
+    if (!token) return { account: null, saved, status };
 
-    if (res.status == 200) {
-        return {
-            saved: res.data
-        }
-    }
-}) satisfies PageServerLoad
+    await axios
+        .request({
+            method: "GET",
+            url: API_URL + "/flights/saved",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) => {
+            console.log(res.data[0]);
+            saved = res.data;
+            status = res.status;
+        })
+        .catch((err) => {
+            console.error(err);
+            status = err.response?.status ?? 500;
+        });
+    status = status === 401 ? 4010 : status;
+    return { saved, status };
+}) satisfies PageServerLoad;

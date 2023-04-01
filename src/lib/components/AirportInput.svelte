@@ -1,59 +1,73 @@
-<script lang='ts'>
-    import airports from '$lib/data/airports.json'
-    import Fuse from 'fuse.js'
+<script lang="ts">
+    import __airports from "$lib/data/airports.json"
+    import type { Airport } from "$lib/interfaces";
 
-    export let placeholder: string
-    export let code: string
+    const airports: Airport[] = __airports
+    export let placeholder: string;
+    export let selectedAirport: Airport = {
+        id: "",
+        name: "",
+        continent: "",
+        municipality: "",
+        iata_code: "",
+    };
+    let searchInput: HTMLInputElement;
+    let possibleAirports: Airport[] = [];
+    let highlightedIndex = -1;
+    let inputValue = "";
 
-    type Airport = {
-        item: {
-            name: string
-            municipality: string
-            iata_code: string
+    const filterAirports = () => {
+        if (!inputValue) return [];
+        return airports.filter((a) => (
+            a.municipality.toLowerCase().includes(inputValue.toLowerCase())
+            || a.name.toLowerCase().includes(inputValue.toLowerCase())
+            || a.iata_code.toLowerCase().includes(inputValue.toLowerCase())
+        )).slice(0, 8)
+    }
+
+    const navigateList = (e: KeyboardEvent) => {
+        if (possibleAirports.length < 1) return;
+        if (e.key === "ArrowDown" || e.key === "Tab") {
+            e.preventDefault()
+            highlightedIndex === possibleAirports.length - 1 ? highlightedIndex = 0 : highlightedIndex += 1;
+        } else if (e.key === "ArrowUp" && highlightedIndex !== -1) {
+            highlightedIndex === 0 ? highlightedIndex = possibleAirports.length - 1 : highlightedIndex -= 1;
+        } else if (e.key === "Enter") {
+            selectedAirport = possibleAirports[highlightedIndex];
+            inputValue = selectedAirport.name;
+            possibleAirports = [];
+        } else if (e.key === "Escape") {
+            inputValue = "";
+            selectedAirport = {
+                id: "",
+                name: "",
+                continent: "",
+                municipality: "",
+                iata_code: "",
+            };
+            possibleAirports = [];
         }
-    }
-
-    const options = {
-        keys: [
-            'name',
-            'iata_code',
-            'municipality'
-        ]
-    }
-    const fuse = new Fuse(airports, options)
-
-    let possibleAirports: Airport[] = []
-    let searchField = { value: '', code: ''}
-
-    const searchPossibleAirports = () => {
-        possibleAirports = fuse.search(searchField.value).slice(0, 5)
-    }
-
-    const assignInput = (airport: Airport) => {
-        searchField.value = airport.item.name
-        searchField.code = airport.item.iata_code
-        code = airport.item.iata_code
-        possibleAirports = []
     }
 </script>
 
-<div class='relative'>
+<div
+    on:keydown={navigateList}
+    class="relative"
+>
     <input
-        bind:value={searchField.value}
-        on:keypress={() => searchPossibleAirports()}
+        bind:this={searchInput}
+        bind:value={inputValue}
+        on:input={() => possibleAirports = filterAirports()}
         placeholder={placeholder}
-        class='w-64 text-xl !outline-none duration-100 ease-in-out focus:border-b-2 focus:border-fo-magenta lg:text-center'
+        class='w-64 text-xl !outline-none duration-100 ease-in-out whitespace-nowrap overflow-ellipsis focus:border-b-2 focus:border-fo-magenta lg:text-center'
     />
-    {#if possibleAirports.length >= 1}
-        <div class='absolute z-10 inset-x-0 bg-white'>
-            {#each possibleAirports as airport}
-                <div
-                    on:click={() => assignInput(airport)}
-                    on:keypress={() => assignInput(airport)}
-                    class='hover:bg-purple-200'>
-                    {airport.item.name} &lpar;{airport.item.iata_code}&rpar;
-                </div>
+    {#if possibleAirports.length > 0}
+        <ul class="absolute w-full top-full bg-white rounded-b-lg z-20">
+            {#each possibleAirports as pa, i}
+                <li class={`px-2 py-4 border-b-2 border-gray-200 last:border-b-0 ${i === highlightedIndex ? "bg-fo-blue text-white" : ""}`}>
+                    {pa.name} ({pa.iata_code})
+                </li>
             {/each}
-        </div>
+        </ul>
     {/if}
 </div>
