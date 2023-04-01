@@ -1,5 +1,5 @@
 import type { PageServerLoad } from "./$types";
-import { PUBLIC_API_URL } from "$env/static/public";
+import { API_URL } from "$env/static/private";
 import axios from "axios";
 import type { FlightOffer } from "$lib/interfaces";
 
@@ -19,7 +19,7 @@ export const load = (async ({ cookies, url }) => {
     await axios
         .request({
             method: "POST",
-            url: PUBLIC_API_URL + "/flights",
+            url: API_URL + "/flights",
             headers: {
                 Authorization: `Bearer ${token}`,
             },

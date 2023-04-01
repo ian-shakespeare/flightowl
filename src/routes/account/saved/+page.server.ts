@@ -1,5 +1,5 @@
 import type { PageServerLoad } from "./$types";
-import { PUBLIC_API_URL } from "$env/static/public";
+import { API_URL } from "$env/static/private";
 import axios from "axios";
 import type { SavedFlightOffer } from "$lib/interfaces";
 
@@ -13,12 +13,13 @@ export const load = (async ({ cookies }) => {
     await axios
         .request({
             method: "GET",
-            url: PUBLIC_API_URL + "/flights/saved",
+            url: API_URL + "/flights/saved",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
         .then((res) => {
+            console.log(res.data[0]);
             saved = res.data;
             status = res.status;
         })
@@ -26,7 +27,6 @@ export const load = (async ({ cookies }) => {
             console.error(err);
             status = err.response?.status ?? 500;
         });
-
     status = status === 401 ? 4010 : status;
     return { saved, status };
 }) satisfies PageServerLoad;

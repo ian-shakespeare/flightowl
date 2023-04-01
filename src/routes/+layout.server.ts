@@ -1,4 +1,4 @@
-import { PUBLIC_API_URL } from "$env/static/public";
+import { API_URL } from "$env/static/private";
 import type { LayoutServerLoad } from "./$types";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ export const load = (async ({ cookies }) => {
     await axios
         .request({
             method: "GET",
-            url: PUBLIC_API_URL + "/user",
+            url: API_URL + "/user",
             headers: {
                 Authorization: `Bearer ${token}`,
             },

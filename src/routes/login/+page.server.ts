@@ -1,10 +1,7 @@
 import axios from "axios";
 import type { Actions } from "./$types";
 import { fail, redirect } from "@sveltejs/kit";
-import {
-    PUBLIC_API_URL,
-    PUBLIC_ACCOUNT_CREATION_DISABLED,
-} from "$env/static/public";
+import { API_URL } from "$env/static/private";
 
 type Response = {
     token: string;
@@ -24,7 +21,7 @@ export const actions = {
 
         await axios
             .post(
-                PUBLIC_API_URL + "/login",
+                API_URL + "/login",
                 {
                     email: email,
                     password: password,
@@ -47,6 +44,7 @@ export const actions = {
             httpOnly: true,
             sameSite: "strict",
             secure: true,
+            expires: new Date(Date.now() + 168 * 3600 * 1000),
         });
         return { success: true, token: response.token };
     },

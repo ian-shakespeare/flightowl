@@ -25,7 +25,7 @@
     },
     "serverError": {
         "message": "We ran into a problem processing your request.",
-        "redirectUrl": "/",
+        "redirectUrl": "",
         "redirectText": "Try again",
         "severity": 3
     },
@@ -40,5 +40,11 @@
         "redirectUrl": "/login",
         "redirectText": "Sign in here",
         "severity": 3
+    },
+    "registrationDisabled": {
+        "message": "Account creation is disabled. If you have an account,",
+        "redirectUrl": "/login",
+        "redirectText": "Sign in here",
+        "severity": 2
     }
 }

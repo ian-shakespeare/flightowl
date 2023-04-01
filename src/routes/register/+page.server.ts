@@ -1,20 +1,20 @@
 import axios from "axios";
-import type { Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 import { fail } from "@sveltejs/kit";
-import {
-    PUBLIC_API_URL,
-    PUBLIC_ACCOUNT_CREATION_DISABLED,
-} from "$env/static/public";
+import { API_URL, ACCOUNT_CREATION_DISABLED } from "$env/static/private";
 
 type Response = {
     token: string;
 };
 
+export const load = (async () => {
+    return { registrationDisabled: ACCOUNT_CREATION_DISABLED === "true" };
+}) satisfies PageServerLoad;
+
 export const actions = {
     default: async ({ cookies, request }) => {
-        if (PUBLIC_ACCOUNT_CREATION_DISABLED === "true") {
-            fail(401);
-            return;
+        if (ACCOUNT_CREATION_DISABLED === "true") {
+            return fail(401, { registrationDisabled: true });
         }
         const data = await request.formData();
         const fname = data.get("fname");
@@ -23,13 +23,11 @@ export const actions = {
         const password = data.get("password");
         const confirmPassword = data.get("password-confirm");
 
-        if (!email) {
-            fail(400, { email, incorrect: true });
-            return;
+        if (!email || !fname || !lname || !password || !confirmPassword) {
+            return fail(400, { missing: true });
         }
-        if (!password || !confirmPassword || password !== confirmPassword) {
-            fail(400, { password, incorrect: true });
-            return;
+        if (password !== confirmPassword) {
+            return fail(400, { password, incorrect: true });
         }
 
         let status = 0;
@@ -37,7 +35,7 @@ export const actions = {
 
         await axios
             .post(
-                PUBLIC_API_URL + "/register",
+                API_URL + "/register",
                 {
                     firstName: fname,
                     lastName: lname,

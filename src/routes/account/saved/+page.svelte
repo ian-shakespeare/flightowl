@@ -25,6 +25,8 @@
 
 {#if errorMap.get(data.status)}
     <ErrorNotification errorType={errorMap.get(data.status)} />
+{:else if savedFlights.length < 1}
+    <ErrorNotification errorType={"noSavedFlights"} />
 {:else}
     <Box>
         <ul>
