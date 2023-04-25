@@ -1,38 +1,11 @@
-# create-svelte
+# FlightOwl
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+By Ian Shakespeare
 
-## Creating a project
+![Screenshot of the FlightOwl homepage](screenshot.png)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Description
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+The web app implementation of [FlightOwl](https://flightowl.app). Server management is handled in `*.server.ts`. All routes are server side rendered. Data is fetched from `flightowl-api`. Styling is done with TailwindCSS.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+FlightOwl is the all-in-one web and mobile app for finding and saving flights. FlightOwl offers a simple interface for flight searching. Flights can be saved and updated, meaning the user can easily save flights if they aren't ready to purchase.
